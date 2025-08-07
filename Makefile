@@ -1,0 +1,3 @@
+all:dev
+
+dev:
