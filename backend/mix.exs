@@ -3,9 +3,9 @@ defmodule SayLess.MixProject do
 
   def project do
     [
-      app: :say_less,
+      app: :say_less, # Changed from :backend
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -15,22 +15,22 @@ defmodule SayLess.MixProject do
 
   def application do
     [
-      mod: {SayLess.Application, []},
+      mod: {SayLess.Application, []}, # Changed from Backend.Application
       extra_applications: [:logger, :runtime_tools]
     ]
   end
 
-  defp elixirc_paths(_), do: ["say_less", "say_less_web"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
     [
       {:phoenix, "~> 1.7.12"},
-      # This is the key fix. By explicitly listing phoenix_pubsub, we ensure
-      # it's compiled before our application tries to use it.
       {:phoenix_pubsub, "~> 2.1"},
-      {:jason, "~> 1.4"},
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 2.0"},
-      {:plug_cowboy, "~> 2.5"}
+      {:dotenvy, "~> 0.6.0"}
     ]
   end
 
