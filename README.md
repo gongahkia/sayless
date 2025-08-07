@@ -2,6 +2,7 @@
 
 ## Todo
 
+* add more backend external_apis support 
 * test backend is working properly
 * then generate frontend
 * then link backend and frontend
