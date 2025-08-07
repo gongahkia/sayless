@@ -21,6 +21,10 @@
 
 ## Usage
 
+```env
+GEMINI_API_KEY=XXX
+```
+
 ## Screenshots
 
 ## Architecture
