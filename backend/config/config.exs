@@ -6,8 +6,6 @@
 
 # General application configuration
 
-Dotenvy.load_file(".env")
-
 import Config
 
 config :backend,

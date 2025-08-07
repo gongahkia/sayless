@@ -1,3 +1,5 @@
+Dotenvy.load_file(".env")
+
 import Config
 
 # config/runtime.exs is executed for all environments, including
