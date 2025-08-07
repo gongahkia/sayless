@@ -2,7 +2,9 @@
 
 ## Todo
 
+* add more backend external_apis support 
 * test backend is working properly
+* properly debug and ensure i understand what's happening with the backend
 * then generate frontend
 * then link backend and frontend
 * furnish README.md
