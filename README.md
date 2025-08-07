@@ -2,6 +2,7 @@
 
 ## Todo
 
+* continue debugging from this point onward https://www.perplexity.ai/search/i-want-to-create-a-full-stack-74p4e0tvRUSYH.gSf.0sAg and attempt the change perplexity suggested
 * add more backend external_apis support 
 * test backend is working properly
 * properly debug and ensure i understand what's happening with the backend
