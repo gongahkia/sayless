@@ -14,14 +14,14 @@ config :backend,
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :backend, BackendWeb.Endpoint,
+config :say_less, SayLessWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [json: BackendWeb.ErrorJSON],
+    formats: [json: SayLessWeb.V1.ErrorView], # We will need to re-add this custom view
     layout: false
   ],
-  pubsub_server: Backend.PubSub,
+  pubsub_server: SayLess.PubSub, # Changed from Backend.PubSub
   live_view: [signing_salt: "jmJxfmdT"]
 
 # Configure esbuild (the version is required)
