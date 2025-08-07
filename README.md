@@ -30,7 +30,7 @@ $ git clone https://github.com/gongahkia/sayless && cd sayless
 $ cd backend && mix deps.get
 ```
 
-2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and create an `.env` file at [project root](./).
+2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and create an `.env` file at [backend](./backend).
 
 ```env
 GEMINI_API_KEY=XXX

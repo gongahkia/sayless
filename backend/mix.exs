@@ -57,7 +57,7 @@ defmodule Backend.MixProject do
       {:bandit, "~> 1.5"},
       {:phoenix_pubsub, "~> 2.1"},
       {:plug_cowboy, "~> 2.5"},
-      {:httpoison, "~> 2.0"}
+      {:httpoison, "~> 2.0"},
       {:dotenvy, "~> 0.6.0"}
     ]
   end
