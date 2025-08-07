@@ -21,8 +21,25 @@
 
 ## Usage
 
+The below instructions are for locally hosting `SayLess`.
+
+1. First execute the below.
+
+```console
+$ git clone https://github.com/gongahkia/sayless && cd sayless
+$ cd backend && mix deps.get
+```
+
+2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and create an `.env` file at [project root](./).
+
 ```env
 GEMINI_API_KEY=XXX
+```
+
+3. Finally run the below.
+
+```console
+$ mix phx.server
 ```
 
 ## Screenshots
