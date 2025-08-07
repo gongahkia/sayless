@@ -6,6 +6,7 @@ defmodule SayLess.MixProject do
       app: :say_less,
       version: "0.1.0",
       elixir: "~> 1.14",
+      # This is the key change: we point the compiler to the correct source directory.
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -13,8 +14,6 @@ defmodule SayLess.MixProject do
     ]
   end
 
-  # This function defines the main application module.
-  # Phoenix applications have a "supervisor" that starts all necessary processes.
   def application do
     [
       mod: {SayLess.Application, []},
@@ -22,27 +21,19 @@ defmodule SayLess.MixProject do
     ]
   end
 
-  # Specifies which paths to compile for different environments.
-  # For :test, it includes test-specific helpers.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  # We tell the compiler to look in the `say_less` and `say_less_web` directories.
+  defp elixirc_paths(_), do: ["say_less", "say_less_web"]
 
-  # These are the project's dependencies.
-  # `mix deps.get` will fetch these from the Hex package manager.
   defp deps do
     [
       {:phoenix, "~> 1.7.12"},
-      {:jason, "~> 1.4"}, # A fast Elixir JSON library [11][17]
-      {:httpoison, "~> 2.0"}, # HTTP client for making requests to external APIs [4]
+      {:jason, "~> 1.4"},
+      {:httpoison, "~> 2.0"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end
 
-  # Aliases provide shortcuts for common tasks.
   defp aliases do
-    [
-      # setup: ["deps.get"], # Example alias
-      # test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
-    ]
+    []
   end
 end
