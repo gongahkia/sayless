@@ -13,6 +13,12 @@
 
 ## Stack
 
+* *Frontend*: [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+* *Backend*: [Phoenix](https://www.phoenixframework.org/), [Elixir](https://elixir-lang.org/), [Ecto](https://hexdocs.pm/ecto/)
+* *DB*: 
+* *Auth*: 
+* *Cache*: 
+
 ## Usage
 
 ## Screenshots
