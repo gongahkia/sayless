@@ -13,8 +13,8 @@ config :say_less, SayLessWeb.Endpoint,
   live_view: [signing_salt: "some-long-and-random-string"]
 
 # Configure Phoenix to use the Jason library for all JSON encoding and decoding.
-# This is a critical step for a JSON API.
-config :phoenix, :json_library, Jason [2]
+# This is the corrected line.
+config :phoenix, :json_library, Jason
 
 # Import the configuration specific to the current environment.
 # For example, when running `mix phx.server`, this will import `config/dev.exs`.

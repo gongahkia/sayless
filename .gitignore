@@ -1,2 +1,11 @@
-.env
-.env.local
+.env*
+!/.env.example
+deps/
+_build/
+*.ez
+rel/
+erl_crash.dump
+*.log
+priv/static/cache_manifest.json
+.DS_Store
+Thumbs.db

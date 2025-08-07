@@ -13,8 +13,6 @@ defmodule SayLess.MixProject do
     ]
   end
 
-  # This function defines the main application module.
-  # Phoenix applications have a "supervisor" that starts all necessary processes.
   def application do
     [
       mod: {SayLess.Application, []},
@@ -22,27 +20,21 @@ defmodule SayLess.MixProject do
     ]
   end
 
-  # Specifies which paths to compile for different environments.
-  # For :test, it includes test-specific helpers.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(_), do: ["say_less", "say_less_web"]
 
-  # These are the project's dependencies.
-  # `mix deps.get` will fetch these from the Hex package manager.
   defp deps do
     [
       {:phoenix, "~> 1.7.12"},
-      {:jason, "~> 1.4"}, # A fast Elixir JSON library [11][17]
-      {:httpoison, "~> 2.0"}, # HTTP client for making requests to external APIs [4]
+      # This is the key fix. By explicitly listing phoenix_pubsub, we ensure
+      # it's compiled before our application tries to use it.
+      {:phoenix_pubsub, "~> 2.1"},
+      {:jason, "~> 1.4"},
+      {:httpoison, "~> 2.0"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end
 
-  # Aliases provide shortcuts for common tasks.
   defp aliases do
-    [
-      # setup: ["deps.get"], # Example alias
-      # test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
-    ]
+    []
   end
 end

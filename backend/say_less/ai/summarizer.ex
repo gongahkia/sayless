@@ -27,19 +27,23 @@ defmodule SayLess.Ai.Summarizer do
   defp build_request_body(content, params) do
     prompt = create_prompt(content, params["target_name"], params["media_title"])
 
+    # This map now uses idiomatic Elixir atom keys.
     Jason.encode!(%{
-      "contents": [%{"parts": [%{"text": prompt}]}],
-      "generationConfig": %{
-        "response_mime_type": "application/json"
+      contents: [%{parts: [%{text: prompt}]}],
+      generationConfig: %{
+        response_mime_type: "application/json"
       },
-      # The tool config tells Gemini to use our schema for its function-calling response
-      "tools": [%{
-        "function_declarations": [%{
-          "name": "summarize_section",
-          "description": "Creates a structured summary of a piece of content.",
-          "parameters": SummarySchema.get_schema_definition()
-        }]
-      }]
+      tools: [
+        %{
+          function_declarations: [
+            %{
+              name: "summarize_section",
+              description: "Creates a structured summary of a piece of content.",
+              parameters: SummarySchema.get_schema_definition()
+            }
+          ]
+        }
+      ]
     })
   end
 
@@ -59,15 +63,11 @@ defmodule SayLess.Ai.Summarizer do
   end
 
   defp parse_gemini_response(parsed_body) do
-    # Gemini's function calling response is nested. We need to extract the JSON arguments.
     case get_in(parsed_body, ["candidates", 0, "content", "parts", 0, "functionCall", "args"]) do
       nil ->
-        # If the model didn't call the function, check for a rejection or error.
         error_text = get_in(parsed_body, ["candidates", 0, "finishReason"])
         {:error, "AI model failed to generate a valid summary. Reason: #{error_text}"}
-
       args_map ->
-        # The AI returns a valid map that already matches our schema.
         {:ok, args_map}
     end
   end
