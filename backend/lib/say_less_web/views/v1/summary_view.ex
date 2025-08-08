@@ -1,5 +1,5 @@
 defmodule SayLessWeb.V1.SummaryView do
-  use Phoenix.View
+  # The "use Phoenix.View" line has been removed.
 
   @doc """
   Renders the successful summary response in the required JSON format.
