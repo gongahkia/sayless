@@ -1,6 +1,14 @@
-Dotenvy.source(".env")
-
 import Config
+
+if config_env() == :dev do
+  # The path to your .env file.
+  dotenvy_path = Path.expand("../../.env", __DIR__)
+  if File.exists?(dotenvy_path) do
+    Dotenvy.source(dotenvy_path)
+  end
+end
+
+config :say_less, :gemini_api_key, System.get_env("GEMINI_API_KEY")
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
