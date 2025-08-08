@@ -10,9 +10,18 @@ if config_env() == :dev do
   dotenv_path = Path.expand("../.env", __DIR__)
 
   if File.exists?(dotenv_path) do
-    # Use Dotenvy.parse to read the file directly into a map.
-    # This is more reliable than loading into the OS environment.
-    env_vars = Dotenvy.parse(dotenv_path)
+    # Manually parse the .env file to avoid any library version issues.
+    # This reads the file, filters comments/empty lines, and splits it into a map.
+    env_vars =
+      File.read!(dotenv_path)
+      |> String.split("\n", trim: true)
+      |> Enum.reject(&(&1 == "" || String.starts_with?(&1, "#")))
+      |> Enum.map(&String.split(&1, "=", parts: 2))
+      |> Enum.into(%{}, fn [key, value] ->
+        # This removes quotes from the value, e.g., "your-key" -> your-key
+        cleaned_value = value |> String.trim() |> String.trim("\"") |> String.trim("'")
+        {key, cleaned_value}
+      end)
 
     # Get the specific key we need from the parsed map.
     gemini_key = Map.get(env_vars, "GEMINI_API_KEY")
