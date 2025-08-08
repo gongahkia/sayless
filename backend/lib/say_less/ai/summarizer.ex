@@ -8,12 +8,16 @@ defmodule SayLess.Ai.Summarizer do
 
   def generate_summary_from_content(content, params) do
     api_key = Application.fetch_env!(:say_less, :gemini_api_key)
-    headers = [{"Content-Type", "application/json"}]
+
+    # Using the X-goog-api-key header, which is the modern standard.
+    headers = [
+      {"Content-Type", "application/json"},
+      {"X-goog-api-key", api_key}
+    ]
     body = build_request_body(content, params)
 
-    url = "#{@gemini_api_url}?key=#{api_key}"
-
-    with {:ok, %{status_code: 200, body: resp_body}} <- HTTPoison.post(url, body, headers),
+    # The API key is now in the header, not the URL.
+    with {:ok, %{status_code: 200, body: resp_body}} <- HTTPoison.post(@gemini_api_url, body, headers),
          {:ok, parsed_body} <- Jason.decode(resp_body) do
       parse_gemini_response(parsed_body)
     else
@@ -37,47 +41,53 @@ defmodule SayLess.Ai.Summarizer do
     """
     You are an expert summarizer for the 'SayLess' app. Your task is to provide a concise summary of a specific section of a media work, based on the content provided.
     The user wants to skip reading or watching the section named '#{target}' of the work '#{title}'.
-
     Based *only* on the text content below, please extract the key information.
     --- CONTENT TO SUMMARIZE ---
     #{content}
     --------------------------
-
     Now, call the `summarize_section` function with the extracted information.
     """
   end
 
-  # --- THIS IS THE CORRECTED, ROBUST PARSER ---
+  # --- THIS IS THE FINAL, CORRECTED PARSER ---
   defp parse_gemini_response(parsed_body) do
-    # First, safely get the list of candidates from the response.
+    # The Gemini API returns a list of candidates. We will robustly handle this.
     candidates = get_in(parsed_body, ["candidates"])
 
-    # Now, pattern match on the list of candidates.
     case candidates do
-      # Case 1: The list exists and has at least one candidate.
-      # We use pattern matching to get the first one (`head`).
+      # Case 1: The candidates list exists and has at least one candidate.
+      # We use pattern matching on `[head | _]` to safely get the first element.
       [head | _] ->
         finish_reason = get_in(head, ["finishReason"])
 
         cond do
-          # Check for safety blocks or other non-standard stops first.
+          # First, check if the model stopped for a reason other than "STOP".
+          # This is often due to safety filters.
           finish_reason not in ["STOP", nil] ->
-            {:error, "AI model stopped for reason: '#{finish_reason}'. The prompt may have been blocked by safety filters."}
+            {:error, "AI model stopped for reason: '#{finish_reason}'. The prompt may have been blocked."}
 
-          # Try to get the function call we expect.
-          function_args = get_in(head, ["content", "parts", 0, "functionCall", "args"]) ->
-            {:ok, function_args}
+          # Next, safely get the list of "parts" from the content.
+          parts = get_in(head, ["content", "parts"]) ->
+            case parts do
+              # The parts list has at least one part. Get the head.
+              [first_part | _] ->
+                # Now check this first part for the function call we expect.
+                if function_args = get_in(first_part, ["functionCall", "args"]) do
+                  {:ok, function_args}
+                else
+                  {:error, "AI returned a response part, but it was not the expected function call."}
+                end
+              # The parts list was empty.
+              _ ->
+                {:error, "AI response contained an empty 'parts' list."}
+            end
 
-          # If there's no function call, check for a direct text response.
-          text_response = get_in(head, ["content", "parts", 0, "text"]) ->
-            {:error, "AI returned a direct text response instead of a summary: '#{text_response}'"}
-
-          # If all else fails, the structure is unknown.
+          # If the "content" or "parts" keys were missing.
           true ->
             {:error, "AI returned an unparsable response structure. Candidate Body: #{inspect(head)}"}
         end
 
-      # Case 2: The list is empty or doesn't exist.
+      # Case 2: The candidates list is empty or doesn't exist.
       _ ->
         {:error, "AI model returned no candidates in the response. Full Body: #{inspect(parsed_body)}"}
     end
