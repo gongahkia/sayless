@@ -25,11 +25,16 @@ if config_env() == :dev do
 
     # Get the specific key we need from the parsed map.
     gemini_key = Map.get(env_vars, "GEMINI_API_KEY")
+    tmdb_key = Map.get(env_vars, "TMDB_API_KEY")
 
     # Set the application configuration ONLY if the key was found.
     if gemini_key do
       config :say_less, :gemini_api_key, gemini_key
     end
+    if tmdb_key do
+      config :say_less, :tmdb_api_key, tmdb_key
+    end
+
   else
     # This warning helps if the .env file is missing.
     IO.puts(:stderr, "[Warning] .env file not found at #{dotenv_path}")
