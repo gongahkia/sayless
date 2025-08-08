@@ -28,7 +28,8 @@ defmodule SayLess.MixProject do
       {:phoenix, "~> 1.7.12"},
       {:phoenix_pubsub, "~> 2.1"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
+      {:plug_cowboy, "~> 2.7"},
+      {:cors_plug, "~> 1.5"},
       {:httpoison, "~> 2.0"},
       {:dotenvy, "~> 0.6.0"}
     ]
