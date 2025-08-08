@@ -69,6 +69,10 @@ curl -X POST http://localhost:4000/api/v1/summarize \
 curl -X POST http://localhost:4000/api/v1/summarize \
      -H "Content-Type: application/json" \
      -d '{"source": "openlibrary", "media_id": "OL45804W"}'
+
+curl -X POST http://localhost:4000/api/v1/summarize \
+     -H "Content-Type: application/json" \
+     -d '{"source": "themoviedb", "media_id": 550}'
 ```
 
 ## Architecture
