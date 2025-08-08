@@ -1,103 +1,150 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState, useEffect } from 'react'
+import SummaryForm from '@/components/SummaryForm'
+import SummaryDisplay from '@/components/SummaryDisplay'
+import { Heart, Sun, Moon } from 'lucide-react'
+
+interface SummaryData {
+  characters: string[]
+  key_events: string
+  plot_points: string[]
+}
+
+interface ApiResponse {
+  data: {
+    summary: SummaryData
+  }
+}
+
+interface ApiError {
+  errors: {
+    detail: string
+  }
+}
+
+export default function App() {
+  const [summaryData, setSummaryData] = useState<SummaryData | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [isDark, setIsDark] = useState(true)
+
+  const handleSummarize = async (formData: {
+    source: string
+    media_id: string
+    target_name?: string
+  }) => {
+    setLoading(true)
+    setError(null)
+    setSummaryData(null)
+
+    try {
+      const requestBody: any = {
+        source: formData.source,
+        media_id: formData.media_id
+      }
+
+      if (formData.source === 'myanimelistanime' && formData.target_name) {
+        requestBody.target_name = formData.target_name
+      }
+
+      const response = await fetch('http://localhost:4000/api/v1/summarize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      })
+
+      if (response.ok) {
+        const data: ApiResponse = await response.json()
+        setSummaryData(data.data.summary)
+      } else {
+        const errorData: ApiError = await response.json()
+        setError(errorData.errors.detail)
+      }
+    } catch (err) {
+      setError('Failed to connect to the server. Please make sure the backend is running.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className={`min-h-screen transition-colors duration-300 ${
+      isDark ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'
+    }`}>
+      {/* Theme Toggle - Top Right */}
+      <div className="absolute top-4 right-4 z-10">
+        <button
+          onClick={() => setIsDark(!isDark)}
+          className={`p-3 rounded-lg border transition-all duration-300 hover:scale-110 ${
+            isDark 
+              ? 'bg-gray-800 border-gray-700 text-yellow-400 hover:bg-gray-700' 
+              : 'bg-white border-gray-300 text-gray-600 hover:bg-gray-100'
+          }`}
+          title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold mb-2">SayLess</h1>
+            <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>
+              Get AI-powered summaries of your favorite media
+            </p>
+          </div>
+
+          <div>
+            <SummaryForm onSubmit={handleSummarize} loading={loading} isDark={isDark} />
+          </div>
+
+          {error && (
+            <div className={`mt-6 p-4 border rounded-lg ${
+              isDark 
+                ? 'border-red-500 bg-red-500/10 text-red-400' 
+                : 'border-red-400 bg-red-50 text-red-600'
+            }`}>
+              <p>{error}</p>
+            </div>
+          )}
+
+          {summaryData && (
+            <div>
+              <SummaryDisplay summary={summaryData} isDark={isDark} />
+            </div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </div>
+      
+      <footer className="mt-12 text-center">
+        <p className={`text-sm flex items-center justify-center gap-1 flex-wrap ${
+          isDark ? 'text-gray-400' : 'text-gray-600'
+        }`}>
+          Made with <Heart className="w-4 h-4 text-red-500 fill-current" /> by{' '}
+          <a 
+            href="https://gabrielongzm.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-400 transition-colors underline"
+          >
+            Gabriel Ong
+          </a>
+          <span className="mx-2">•</span>
+          Source code{' '}
+          <a 
+            href="https://github.com/gongahkia/sayless" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-400 transition-colors underline"
+          >
+            here
+          </a>
+        </p>
       </footer>
     </div>
-  );
+  )
 }
