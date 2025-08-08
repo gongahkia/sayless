@@ -39,7 +39,7 @@ The below instructions are for locally hosting `SayLess`.
 
 ```console
 $ git clone https://github.com/gongahkia/sayless && cd sayless
-$ cd backend && mix deps.get
+$ chmod +x dev.sh
 ```
 
 2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and [TMDb API Key](https://developer.themoviedb.org/reference/intro/getting-started), then create an `.env` file at [backend](./backend).
@@ -52,7 +52,7 @@ TMDB_API_KEY=XXX
 3. Finally run the below.
 
 ```console
-$ mix phx.server
+$ make
 ```
 
 ## Endpoints
