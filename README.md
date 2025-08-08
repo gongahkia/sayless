@@ -2,7 +2,9 @@
 
 # `SayLess`
 
+Full Stack Web App that generates summaries for [Multiple Entertainment Mediums](#endpoints) *(anime, manga, books, movies)*.
 
+Made mostly to practise [this stack](#stack). Other comments can be found [here](#other-notes).
 
 ## Rationale
 
