@@ -1,5 +1,6 @@
 defmodule SayLessWeb.Router do
-  use SayLessWeb, :router
+  use Phoenix.Router
+  import Phoenix.Controller
 
   # This pipeline prepares the connection for API requests.
   # It tells Phoenix to only accept requests with the "Accept" header set to "application/json".

@@ -12,6 +12,12 @@
 
 # `SayLess`
 
+... add funny logo here
+
+## Rationale
+
+... Something about spoilers and not wanting to rewatch Rezeero season 2
+
 ## Stack
 
 * *Frontend*: [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
@@ -45,6 +51,12 @@ $ mix phx.server
 
 ## Screenshots
 
+...
+
 ## Architecture
 
+...
+
 ## Reference
+
+...
