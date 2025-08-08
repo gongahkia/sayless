@@ -2,6 +2,8 @@ defmodule SayLessWeb.V1.ErrorView do
   import Plug.Conn
   import Phoenix.Controller, only: [put_view: 2, render: 3]
 
+  def init(opts), do: opts
+
   # This is the entry point from the controller's `action_fallback`.
   def call(conn, {:error, reason}) when is_binary(reason) do
     conn

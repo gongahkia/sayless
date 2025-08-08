@@ -11,9 +11,6 @@ defmodule SayLessWeb.Endpoint do
     same_site: "Lax"
   ]
 
-  # Socket handler for Phoenix Channels, if you use them.
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
-
   # Serve at "/" the static assets from "priv/static" directory.
   # It is advisable to move spoils to the end of the pipeline so
   # Plug.Conn can be used before they are served.
