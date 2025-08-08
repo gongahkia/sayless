@@ -8,9 +8,6 @@
 
 import Config
 
-config :backend,
-  generators: [timestamp_type: :utc_datetime]
-
 # Configures the endpoint
 config :say_less, SayLessWeb.Endpoint,
   url: [host: "localhost"],
