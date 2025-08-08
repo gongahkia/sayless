@@ -2,12 +2,6 @@
 
 ## Todo
 
-* test backend is working properly
-* figure out all the existing endpoints so that my frontend generation code is simple and can be focused on frontend
-* add more endpoints within ./backend/lib/say_less/external_apis/
-* add more backend external_apis support 
-* then generate frontend
-* then link backend and frontend
 * furnish README.md
 
 # `SayLess`
