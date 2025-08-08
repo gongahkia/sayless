@@ -26,6 +26,10 @@
 * *Auth*: 
 * *Cache*: 
 
+## Screenshots
+
+...
+
 ## Usage
 
 The below instructions are for locally hosting `SayLess`.
@@ -49,7 +53,7 @@ GEMINI_API_KEY=XXX
 $ mix phx.server
 ```
 
-## Screenshots
+## Endpoints
 
 ...
 
