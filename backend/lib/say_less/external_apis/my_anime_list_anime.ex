@@ -1,4 +1,4 @@
-defmodule SayLess.ExternalApis.MyAnimeList do
+defmodule SayLess.ExternalApis.MyAnimeListAnime do
   @moduledoc """
   Client for fetching anime & manga data from MyAnimeList via the Jikan API.
   """
