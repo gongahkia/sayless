@@ -4,7 +4,6 @@ defmodule SayLess.Ai.Summarizer do
   """
   alias SayLess.Schemas.SummarySchema
 
-  # Using the Gemini 2.0 URL as previously requested.
   @gemini_api_url "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
   def generate_summary_from_content(content, params) do
@@ -14,7 +13,6 @@ defmodule SayLess.Ai.Summarizer do
 
     url = "#{@gemini_api_url}?key=#{api_key}"
 
-    # This 'with' block includes better error handling for non-200 responses.
     with {:ok, %{status_code: 200, body: resp_body}} <- HTTPoison.post(url, body, headers),
          {:ok, parsed_body} <- Jason.decode(resp_body) do
       parse_gemini_response(parsed_body)
@@ -44,20 +42,22 @@ defmodule SayLess.Ai.Summarizer do
     --- CONTENT TO SUMMARIZE ---
     #{content}
     --------------------------
+
     Now, call the `summarize_section` function with the extracted information.
     """
   end
 
-  # --- THIS IS THE NEW, MORE ROBUST PARSER ---
+  # --- THIS IS THE CORRECTED, ROBUST PARSER ---
   defp parse_gemini_response(parsed_body) do
-    case get_in(parsed_body, ["candidates", 0]) do
-      # Case 1: The model returned no candidates.
-      nil ->
-        {:error, "AI model returned an empty or invalid response. Full Body: #{inspect(parsed_body)}"}
+    # First, safely get the list of candidates from the response.
+    candidates = get_in(parsed_body, ["candidates"])
 
-      # Case 2: A candidate was returned.
-      candidate ->
-        finish_reason = get_in(candidate, ["finishReason"])
+    # Now, pattern match on the list of candidates.
+    case candidates do
+      # Case 1: The list exists and has at least one candidate.
+      # We use pattern matching to get the first one (`head`).
+      [head | _] ->
+        finish_reason = get_in(head, ["finishReason"])
 
         cond do
           # Check for safety blocks or other non-standard stops first.
@@ -65,17 +65,21 @@ defmodule SayLess.Ai.Summarizer do
             {:error, "AI model stopped for reason: '#{finish_reason}'. The prompt may have been blocked by safety filters."}
 
           # Try to get the function call we expect.
-          function_args = get_in(candidate, ["content", "parts", 0, "functionCall", "args"]) ->
+          function_args = get_in(head, ["content", "parts", 0, "functionCall", "args"]) ->
             {:ok, function_args}
 
           # If there's no function call, check for a direct text response.
-          text_response = get_in(candidate, ["content", "parts", 0, "text"]) ->
+          text_response = get_in(head, ["content", "parts", 0, "text"]) ->
             {:error, "AI returned a direct text response instead of a summary: '#{text_response}'"}
 
           # If all else fails, the structure is unknown.
           true ->
-            {:error, "AI returned an unparsable response structure. Candidate Body: #{inspect(candidate)}"}
+            {:error, "AI returned an unparsable response structure. Candidate Body: #{inspect(head)}"}
         end
+
+      # Case 2: The list is empty or doesn't exist.
+      _ ->
+        {:error, "AI model returned no candidates in the response. Full Body: #{inspect(parsed_body)}"}
     end
   end
 end
