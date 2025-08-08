@@ -1,16 +1,18 @@
 [![](https://img.shields.io/badge/sayless_1.0.0-passing-green)](https://github.com/gongahkia/sayless/releases/tag/1.0.0) 
 
-## Todo
-
-* furnish README.md
-
 # `SayLess`
 
-... add funny logo here
+
 
 ## Rationale
 
-... Something about spoilers and not wanting to rewatch Rezeero season 2
+I watched [Episode 1](https://www.imdb.com/title/tt10112240/?ref_=ttep_ep_1) of [Re:Zero](https://www.imdb.com/title/tt5607616)'s [Second Season](https://www.imdb.com/title/tt5607616/episodes/?season=2) last week and hated the setting so much I wished I could skip Season 2 and just [go next](https://www.urbandictionary.com/define.php?term=go+next).
+
+So I made [***this Web App***](https://github.com/gongahkia/sayless) to serve that end.
+
+<div align="center">
+  <img src="./asset/reference/subaru.gif" width="75%">
+</div>
 
 ## Stack
 
