@@ -5,16 +5,25 @@ import SummaryForm from '@/components/SummaryForm'
 import SummaryDisplay from '@/components/SummaryDisplay'
 import { Heart, Sun, Moon } from 'lucide-react'
 
-interface SummaryData {
-  characters: string[]
-  key_events: string
-  plot_points: string[]
+// Add this new interface to describe the raw API response
+interface RawSummaryData {
+  characters: string; // The API actually sends a string
+  key_events: string;
+  plot_points: string; // The API actually sends a string
 }
 
+// This is your existing interface for the final, clean data
+interface SummaryData {
+  characters: string[];
+  key_events: string;
+  plot_points: string[];
+}
+
+// Update ApiResponse to use the new RawSummaryData type
 interface ApiResponse {
   data: {
-    summary: SummaryData
-  }
+    summary: RawSummaryData; // Use the new type here
+  };
 }
 
 interface ApiError {
@@ -57,10 +66,17 @@ export default function App() {
       })
 
       if (response.ok) {
-        const data: ApiResponse = await response.json()
-        setSummaryData(data.data.summary)
+        const apiResponse: ApiResponse = await response.json();
+        const rawSummary = apiResponse.data.summary;
+        const formattedSummary: SummaryData = {
+          ...rawSummary,
+          characters: rawSummary.characters.split(',').map(name => name.trim()),
+          plot_points: rawSummary.plot_points.split('.').filter(p => p.trim() !== "").map(point => point.trim()),
+        };
+        setSummaryData(formattedSummary);
       } else {
         const errorData: ApiError = await response.json()
+        console.log("API Error Data:", errorData);
         setError(errorData.errors.detail)
       }
     } catch (err) {

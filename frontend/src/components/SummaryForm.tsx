@@ -22,7 +22,7 @@ const sourceOptions = [
   { value: 'myanimelistmanga', label: 'MyAnimeList Manga' },
   { value: 'myanimelistanime', label: 'MyAnimeList Anime' },
   { value: 'openlibrary', label: 'Open Library' },
-  { value: 'tmdb', label: 'TMDB (Movies/TV)' },
+  { value: 'themoviedb', label: 'TMDB (Movies/TV)' },
 ]
 
 export default function SummaryForm({ onSubmit, loading, isDark }: SummaryFormProps) {
