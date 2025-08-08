@@ -7,7 +7,7 @@ defmodule SayLessWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_say_less_key",
-    signing_salt: "YOUR_SECRET_SALT_HERE", # Replace with a long random string
+    signing_salt: "I_LIKE_MY_FOOD_NICE_AND_SALTY", # Replace with a long random string
     same_site: "Lax"
   ]
 
