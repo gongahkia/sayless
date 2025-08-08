@@ -1,5 +1,4 @@
 defmodule SayLessWeb.V1.ErrorView do
-  use SayLessWeb, :view
 
   # This is the entry point for the action_fallback in the controller.
   # It receives the connection and the error reason.
