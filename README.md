@@ -22,9 +22,10 @@
 
 * *Frontend*: [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 * *Backend*: [Phoenix](https://www.phoenixframework.org/), [Elixir](https://elixir-lang.org/), [Ecto](https://hexdocs.pm/ecto/)
+* *API*: [OpenLibrary API](), [My Anime List API](), [TMDb API]()
+* *Cache*: 
 * *DB*: 
 * *Auth*: 
-* *Cache*: 
 
 ## Screenshots
 
