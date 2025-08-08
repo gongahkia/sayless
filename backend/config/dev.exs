@@ -19,7 +19,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-# Your application-specific development configuration
-config :say_less, :gemini_api_key, System.get_env("GEMINI_API_KEY")
-

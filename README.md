@@ -4,6 +4,7 @@
 
 * test backend is working properly
 * figure out all the existing endpoints so that my frontend generation code is simple and can be focused on frontend
+* add more endpoints within ./backend/lib/say_less/external_apis/
 * add more backend external_apis support 
 * then generate frontend
 * then link backend and frontend
@@ -55,6 +56,20 @@ $ mix phx.server
 ## Endpoints
 
 ...
+
+```console
+curl -X POST http://localhost:4000/api/v1/summarize \
+     -H "Content-Type: application/json" \
+     -d '{"source": "myanimelistanime", "media_id": 16498, "target_name": "Episode 1"}'
+
+curl -X POST http://localhost:4000/api/v1/summarize \
+     -H "Content-Type: application/json" \
+     -d '{"source": "myanimelistmanga", "media_id": 2}'
+
+curl -X POST http://localhost:4000/api/v1/summarize \
+     -H "Content-Type: application/json" \
+     -d '{"source": "openlibrary", "media_id": "OL45804W"}'
+```
 
 ## Architecture
 

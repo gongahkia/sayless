@@ -19,7 +19,10 @@ defmodule SayLess.ExternalApis.Client do
   end
 
   defp get_client_module("openlibrary"), do: {:ok, SayLess.ExternalApis.OpenLibrary}
-  defp get_client_module("myanimelist"), do: {:ok, SayLess.ExternalApis.MyAnimeList}
+  defp get_client_module("myanimelistanime"), do: {:ok, SayLess.ExternalApis.MyAnimeListAnime}
+  defp get_client_module("myanimelistmanga"), do: {:ok, SayLess.ExternalApis.MyAnimeListManga}
+
   defp get_client_module(nil), do: {:error, "API source not specified."}
   defp get_client_module(other), do: {:error, "Unsupported API source: #{other}"}
+
 end
