@@ -92,4 +92,4 @@ $ cd backend && mix phx.server
 
 ## Other notes
 
-...
+[Elixir](https://elixir-lang.org/) is awesome. A pain to learn at first, but awesome.
