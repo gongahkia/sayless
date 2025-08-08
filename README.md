@@ -20,7 +20,7 @@ So I made [***this Web App***](https://github.com/gongahkia/sayless) to serve th
 
 * *Frontend*: [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 * *Backend*: [Phoenix](https://www.phoenixframework.org/), [Elixir](https://elixir-lang.org/), [Ecto](https://hexdocs.pm/ecto/)
-* *API*: [OpenLibrary API](https://openlibrary.org/), [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2), [TMDb API](https://developer.themoviedb.org/docs/getting-started)
+* *API*: [OpenLibrary API](https://openlibrary.org/), [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2), [TMDb API](https://developer.themoviedb.org/docs/getting-started), [Gemini 2.0 Flash API](https://ai.google.dev/gemini-api/docs/api-key)
 
 ## Screenshots
 
@@ -90,7 +90,9 @@ $ cd backend && mix phx.server
 
 ## Architecture
 
-![](...)
+```mermaid
+
+```
 
 ## Other notes
 
