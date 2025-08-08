@@ -11,6 +11,8 @@ defmodule SayLess.Ai.Summarizer do
     headers = [{"Content-Type", "application/json"}]
     body = build_request_body(content, params)
 
+    IO.inspect(api_key, label: "Loaded API Key")
+
     url = "#{@gemini_api_url}?key=#{api_key}"
 
     # This 'with' block has an improved 'else' clause for better debugging.
