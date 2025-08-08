@@ -11,7 +11,7 @@ I watched [Episode 1](https://www.imdb.com/title/tt10112240/?ref_=ttep_ep_1) of 
 So I made [***this Web App***](https://github.com/gongahkia/sayless) to serve that end.
 
 <div align="center">
-  <img src="./asset/reference/subaru.gif" width="75%">
+  <img src="./asset/reference/subaru.gif" width="50%">
 </div>
 
 ## Stack
