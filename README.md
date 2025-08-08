@@ -91,7 +91,67 @@ $ cd backend && mix phx.server
 ## Architecture
 
 ```mermaid
+graph TD
+    subgraph Browser
+        User[End User] -->|Interacts with| P([src/app/page.tsx]);
+        P -->|Renders| SF(components/SummaryForm);
+        SF -->|User submits form| H(handleSummarize function);
+        H -->|POST /api/v1/summarize with form data| R(Phoenix Router);
+        H -->|Receives JSON & transforms data| P;
+        P -->|Passes props to| SD(components/SummaryDisplay);
+        SD -->|Renders summary| User;
+    end
 
+    subgraph "Phoenix Backend API"
+        R[lib/say_less_web/router.ex] -->|Routes to| SC(controllers/v1/summary_controller.ex);
+        SC -->|Invokes business logic| SUM(ai/summarizer.ex);
+        SUM -->|Selects appropriate client| CLIENT(external_apis/client.ex);
+        CLIENT -->|Fetches data from| ExternalAPIs;
+        ExternalAPIs -->|Returns raw data| CLIENT;
+        CLIENT -->|Passes data back| SUM;
+        SUM -->|Calls Gemini API with context| Gemini;
+        Gemini -->|Returns AI-generated summary| SUM;
+        SUM -->|Returns summary data| SC;
+        SC -->|Renders JSON response via| VIEW(views/v1/summary_view.ex);
+        VIEW -->|Sends response to frontend| H;
+    end
+
+    subgraph "External APIs"
+        ExternalAPIs(Data Sources);
+        Gemini(Google Gemini API);
+        subgraph "Data Fetching Modules"
+            TMDB(external_apis/the_movie_db.ex);
+            MAL(external_apis/my_anime_list_....ex);
+            OL(external_apis/open_library.ex);
+        end
+        CLIENT -.->|Delegates to| TMDB;
+        CLIENT -.->|Delegates to| MAL;
+        CLIENT -.->|Delegates to| OL;
+    end
+
+    %% Original Styles
+    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style P fill:#bbf,stroke:#333,stroke-width:2px
+    style R fill:#f80,stroke:#333,stroke-width:2px
+    style ExternalAPIs fill:#9f9,stroke:#333,stroke-width:2px
+    style Gemini fill:#9f9,stroke:#333,stroke-width:2px
+
+    %% Added Styles
+    %% Browser
+    style SF fill:#cde,stroke:#333,stroke-width:2px
+    style H fill:#dae,stroke:#333,stroke-width:2px
+    style SD fill:#e9f,stroke:#333,stroke-width:2px
+
+    %% Phoenix Backend
+    style SC fill:#f9a,stroke:#333,stroke-width:2px
+    style SUM fill:#fab,stroke:#333,stroke-width:2px
+    style CLIENT fill:#fbc,stroke:#333,stroke-width:2px
+    style VIEW fill:#fcd,stroke:#333,stroke-width:2px
+
+    %% External APIs / Data Fetching
+    style TMDB fill:#afA,stroke:#333,stroke-width:2px
+    style MAL fill:#bfB,stroke:#333,stroke-width:2px
+    style OL fill:#cfC,stroke:#333,stroke-width:2px
 ```
 
 ## Other notes
