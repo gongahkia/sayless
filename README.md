@@ -60,7 +60,7 @@ $ mix phx.server
 ```console
 curl -X POST http://localhost:4000/api/v1/summarize \
      -H "Content-Type: application/json" \
-     -d '{"source": "myanimelist", "media_id": 16498, "target_name": "Episode 1"}'
+     -d '{"source": "myanimelistanime", "media_id": 16498, "target_name": "Episode 1"}'
 
 curl -X POST http://localhost:4000/api/v1/summarize \
      -H "Content-Type: application/json" \
