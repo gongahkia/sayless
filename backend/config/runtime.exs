@@ -1,4 +1,4 @@
-Dotenvy.load_file(".env")
+Dotenvy.load()
 
 import Config
 
