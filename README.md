@@ -79,12 +79,12 @@ $ cd backend && mix phx.server
 
 2. Then use `curl` via the following to test POST reqeuests to the [Backend](./backend/).
 
-| Command | Example | Purpose |
-| :--- |:--- | :--- |
-| | `curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "myanimelistanime", "media_id": 16498, "target_name": "Episode 1"}'` | | 
-| | `curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "myanimelistmanga", "media_id": 2}'` | | 
-| |`curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "openlibrary", "media_id": "OL45804W"}'` | |
-| | `curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "themoviedb", "media_id": 550}'` | |
+| Media Type | Source | Schema | Example command |
+| :--- | :--- | :--- |:--- | 
+| Anime | [MyAnimeList](https://myanimelist.net/) | `{"source": "myanimelistanime", "media_id": <SHOWID>, "target_name": "Episode <EP_NUM>"}` | `curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "myanimelistanime", "media_id": 16498, "target_name": "Episode 1"}'` |
+| Manga | [MyAnimeList](https://myanimelist.net/) | `{"source": "myanimelistmanga", "media_id": <MANGAID>}` | `curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "myanimelistmanga", "media_id": 2}'` | 
+| Book | [OpenLibrary](https://openlibrary.org/) | `{"source": "openlibrary", "media_id": "<BOOKID>"}` |`curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "openlibrary", "media_id": "OL45804W"}'` |
+| Movie | [TMDb](https://www.themoviedb.org/) | `{"source": "themoviedb", "media_id": <MOVIEID>}` | `curl -X POST http://localhost:4000/api/v1/summarize -H "Content-Type: application/json" -d '{"source": "themoviedb", "media_id": 550}'` |
 
 ## Architecture
 
