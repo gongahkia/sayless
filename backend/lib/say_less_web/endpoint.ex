@@ -34,6 +34,9 @@ defmodule SayLessWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
+  plug CORSPlug
+  plug SayLessWeb.Router
+
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options

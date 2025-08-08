@@ -30,7 +30,8 @@ defmodule SayLess.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 2.0"},
-      {:dotenvy, "~> 0.6.0"}
+      {:dotenvy, "~> 0.6.0"},
+      {:cors_plug, "~> 1.5"}
     ]
   end
 

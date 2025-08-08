@@ -1,6 +1,7 @@
 #!/bin/bash
 
 clear
+echo "LOG: Running dev.sh now..."
 echo "LOG: Starting Backend (Elixir/Phoenix)..."
 (cd backend && mix phx.server) &
 BACKEND_PID=$!
