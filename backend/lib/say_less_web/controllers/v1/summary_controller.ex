@@ -1,5 +1,5 @@
 defmodule SayLessWeb.V1.SummaryController do
-  use SayLessWeb, :controller
+  use Phoenix.Controller, format: "json", layout: false
 
   alias SayLess
 
