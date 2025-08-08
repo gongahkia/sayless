@@ -2,19 +2,24 @@ defmodule SayLessWeb.Router do
   use Phoenix.Router
   import Phoenix.Controller
 
-  # This pipeline prepares the connection for API requests.
-  # It tells Phoenix to only accept requests with the "Accept" header set to "application/json".
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  # This defines a new scope for our API, prefixing all routes inside with /api/v1.
-  # All routes in this scope will pass through the :api pipeline.
+  # --- Add this new scope to handle the root URL ---
+  # This will handle requests made to http://localhost:4000/
+  scope "/", SayLessWeb do
+    pipe_through :api
+
+    # This new route directs GET / requests to the PageController's index action.
+    get "/", V1.PageController, :index
+  end
+
+  # This is your existing scope for your versioned API endpoints
   scope "/api/v1", SayLessWeb do
     pipe_through :api
 
-    # Defines the main endpoint for the application.
-    # POST /api/v1/summarize -> V1.SummaryController.create/2
+    # This route will handle POST /api/v1/summarize requests
     post "/summarize", V1.SummaryController, :create
   end
 end
