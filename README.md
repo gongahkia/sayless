@@ -41,10 +41,11 @@ $ git clone https://github.com/gongahkia/sayless && cd sayless
 $ cd backend && mix deps.get
 ```
 
-2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and create an `.env` file at [backend](./backend).
+2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and [TMDb API Key](https://developer.themoviedb.org/reference/intro/getting-started), then create an `.env` file at [backend](./backend).
 
 ```env
 GEMINI_API_KEY=XXX
+TMDB_API_KEY=XXX
 ```
 
 3. Finally run the below.
