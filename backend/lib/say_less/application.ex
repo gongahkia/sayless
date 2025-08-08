@@ -8,8 +8,8 @@ defmodule SayLess.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the PubSub system
-      SayLess.PubSub,
+      # Start the PubSub system using the correct tuple format
+      {Phoenix.PubSub, name: SayLess.PubSub},
       # Start the Endpoint (the web server)
       SayLessWeb.Endpoint
     ]
