@@ -1,10 +1,27 @@
-all:dev
+.PHONY: setup dev frontend-dev backend-dev frontend-test frontend-build backend-test smoke-api
 
-dev:dev.sh
+all: dev
+
+setup:
+	./scripts/bootstrap.sh
+
+dev:
 	./dev.sh
 
 frontend-dev:
-	cd frontend && npm install && npm run dev
+	cd frontend && npm run dev
 
 backend-dev:
-	cd backend && mix deps.clean --all && mix clean && mix deps.get && mix phx.server
+	cd backend && mix phx.server
+
+frontend-test:
+	cd frontend && npm run test
+
+frontend-build:
+	cd frontend && npm run build
+
+backend-test:
+	cd backend && mix test
+
+smoke-api:
+	./scripts/smoke_api.sh
