@@ -4,7 +4,6 @@ import type {
   SearchResult,
   SourceOption,
   SpoilerLevel,
-  TargetOption,
   TargetsPayload,
 } from "@/lib/contracts";
 import { cn } from "@/lib/utils";
