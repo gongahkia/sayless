@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { SummaryPayload } from "@/lib/contracts";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight, Clock3, Layers3, Sparkles, UsersRound } from "lucide-react";
@@ -140,10 +141,10 @@ function Panel({
   description,
   children,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className="rounded-[1.6rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-5">
@@ -165,7 +166,7 @@ function Badge({
   children,
   tone = "neutral",
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   tone?: "neutral" | "cyan" | "orange";
 }) {
   return (
@@ -188,9 +189,9 @@ function InfoRow({
   label,
   children,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className="grid gap-2 border-b border-white/8 pb-3 last:border-b-0 last:pb-0">
