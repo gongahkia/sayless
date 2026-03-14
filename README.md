@@ -1,16 +1,15 @@
-[![](https://img.shields.io/badge/sayless_1.0.0-passing-green)](https://github.com/gongahkia/sayless/releases/tag/1.0.0) 
+[![](https://img.shields.io/badge/sayless_1.0.0-passing-light_green)](https://github.com/gongahkia/sayless/releases/tag/1.0.0) 
+[![](https://img.shields.io/badge/sayless_2.0.0-passing-green)](https://github.com/gongahkia/sayless/releases/tag/2.0.0) 
 
 # `SayLess`
 
-Full Stack Web App that generates summaries for [Multiple Entertainment Mediums](#endpoints) *(anime, manga, books, movies)*.
-
-Made mostly to practise [this stack](#stack). Other comments can be found [here](#other-notes).
+Full Stack Web App that generates [summaries](#endpoints) for [Anime, Manga, Books and Movies](#support).
 
 ## Rationale
 
-I watched [Episode 1](https://www.imdb.com/title/tt10112240/?ref_=ttep_ep_1) of [Re:Zero](https://www.imdb.com/title/tt5607616)'s [Second Season](https://www.imdb.com/title/tt5607616/episodes/?season=2) last week and hated the setting so much I wished I could skip Season 2 and just [go next](https://www.urbandictionary.com/define.php?term=go+next).
+I watched [Episode 1](https://www.imdb.com/title/tt10112240/?ref_=ttep_ep_1) of [Re:Zero](https://www.imdb.com/title/tt5607616) [Season 2](https://www.imdb.com/title/tt5607616/episodes/?season=2) last week and despised its setting so much I wished I could [go next](https://www.urbandictionary.com/define.php?term=go+next) and just skip Season 2 entirely. 
 
-So I made [***this Web App***](https://github.com/gongahkia/sayless) to serve that end.
+`SayLess` is (*maybe*) a small step in the right direction.
 
 <div align="center">
   <img src="./asset/reference/subaru.gif" width="50%">
@@ -18,7 +17,7 @@ So I made [***this Web App***](https://github.com/gongahkia/sayless) to serve th
 
 ## Stack
 
-* *Frontend*: [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+* *Frontend*: [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS]()
 * *Backend*: [Phoenix](https://www.phoenixframework.org/), [Elixir](https://elixir-lang.org/), [Ecto](https://hexdocs.pm/ecto/)
 * *API*: [OpenLibrary API](https://openlibrary.org/), [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2), [TMDb API](https://developer.themoviedb.org/docs/getting-started), [Gemini 2.0 Flash API](https://ai.google.dev/gemini-api/docs/api-key)
 
@@ -53,7 +52,7 @@ The below instructions are for locally hosting `SayLess`.
 
 ```console
 $ git clone https://github.com/gongahkia/sayless && cd sayless
-$ chmod +x dev.sh
+$ make setup 
 ```
 
 2. Get your [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key) and [TMDb API Key](https://developer.themoviedb.org/reference/intro/getting-started), then create an `.env` file at [backend](./backend).
@@ -61,13 +60,40 @@ $ chmod +x dev.sh
 ```env
 GEMINI_API_KEY=XXX
 TMDB_API_KEY=XXX
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
 ```
 
-3. Finally run the below.
+3. Then run the below to spin up `SayLess`' frontend and backend.
 
 ```console
 $ make
 ```
+
+4. Optionally run the below additional single-purpose commands.
+
+```console
+$ make frontend-test
+$ make frontend-build
+$ make backend-test
+$ make smoke-backend
+$ make smoke-api
+```
+
+5. Alternatively, run `SayLess`' full stack with Docker to skip local installation of Elixir.
+
+```console
+$ make docker-up
+```
+
+## Support
+
+`SayLess` currently supports the following mediums.
+
+* **Anime**: Search a series, load episodes, summarize a chosen episode
+* **TV**: Search a show, load episodes by season, summarize a chosen episode
+* **Movies**: Search a movie, summarize the full title overview
+* **Manga**: Search a manga, summarize the full title synopsis
+* **Books**: Search a work, summarize the full title description
 
 ## Endpoints
 
