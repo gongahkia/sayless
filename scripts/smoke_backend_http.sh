@@ -4,6 +4,12 @@ set -euo pipefail
 
 API_BASE_URL="${API_BASE_URL:-http://127.0.0.1:4000}"
 
+if ! curl -fsS --max-time 3 "${API_BASE_URL}/" >/dev/null 2>&1; then
+  echo "[sayless] Backend is not reachable at ${API_BASE_URL}."
+  echo "[sayless] Start Phoenix first, then rerun ./scripts/smoke_backend_http.sh."
+  exit 1
+fi
+
 ROOT_RESPONSE="$(curl -fsS "${API_BASE_URL}/")"
 
 if ! printf '%s' "$ROOT_RESPONSE" | grep -q '"name":"SayLess API"'; then
