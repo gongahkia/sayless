@@ -166,6 +166,8 @@ describe("HomePage", () => {
         /Subaru is now emotionally invested in helping Emilia/i,
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText(/episode 1/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /reopen/i }),
+    ).toBeInTheDocument();
   });
 });
