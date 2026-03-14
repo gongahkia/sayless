@@ -95,8 +95,23 @@ Useful single-purpose commands:
 make frontend-test
 make frontend-build
 make backend-test
+make smoke-backend
 make smoke-api
 ```
+
+### Docker option
+
+If you do not want to install Elixir locally, you can run the full stack through Docker:
+
+```console
+make docker-up
+```
+
+This uses:
+
+- [`backend/Dockerfile`](./backend/Dockerfile)
+- [`frontend/Dockerfile`](./frontend/Dockerfile)
+- [`docker-compose.yml`](./docker-compose.yml)
 
 ## API
 
@@ -172,6 +187,14 @@ Error responses are normalized to:
 }
 ```
 
+## Verification paths
+
+- `make frontend-test`: runs the Vitest UI flow coverage
+- `make frontend-build`: validates the production Next.js build
+- `make backend-test`: runs the Phoenix test suite when `mix` is available
+- `make smoke-backend`: checks booted Phoenix HTTP behavior without needing upstream APIs or keys
+- `make smoke-api`: exercises the full search-to-summary flow against real upstream APIs and valid credentials
+
 ## Architecture
 
 At a high level:
@@ -186,7 +209,7 @@ At a high level:
 - Episode depth depends on what upstream public APIs expose
 - There is no database, user account system, or server-side history
 - Movies, books, and manga are intentionally title-level in this version
-- Backend execution still depends on having Elixir/Mix available locally
+- Backend execution can run either through local Elixir/Mix or Docker
 - Live smoke testing still requires a running backend plus valid API keys
 
 ## Screenshots
