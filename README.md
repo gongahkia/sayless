@@ -1,6 +1,6 @@
 [![](https://img.shields.io/badge/sayless_1.0.0-passing-light_green)](https://github.com/gongahkia/sayless/releases/tag/1.0.0) 
 [![](https://img.shields.io/badge/sayless_2.0.0-passing-green)](https://github.com/gongahkia/sayless/releases/tag/2.0.0) 
-![](https://github.com/gongahkia/sayless/actions/workflows/tests.yml/badge.svg)
+![](https://github.com/gongahkia/sayless/actions/workflows/ci.yml/badge.svg)
 
 # `SayLess`
 
