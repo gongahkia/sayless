@@ -1,4 +1,3 @@
-import { act } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import HomePage from "@/app/page";
@@ -73,15 +72,10 @@ const sampleSummary: SummaryPayload = {
 
 describe("HomePage", () => {
   beforeEach(() => {
-    vi.useFakeTimers();
     window.localStorage.clear();
     mockedSearchTitles.mockReset();
     mockedFetchTargets.mockReset();
     mockedCreateSummary.mockReset();
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
   });
 
   it("walks through search, target selection, and summary generation", async () => {
@@ -94,25 +88,19 @@ describe("HomePage", () => {
     mockedFetchTargets.mockResolvedValue(sampleTargets);
     mockedCreateSummary.mockResolvedValue(sampleSummary);
 
-    const user = userEvent.setup({
-      advanceTimers: vi.advanceTimersByTime,
-    });
+    const user = userEvent.setup();
 
     render(<HomePage />);
 
     const searchInput = screen.getByLabelText(/search anime/i);
     await user.type(searchInput, "rezero");
 
-    await act(async () => {
-      await vi.advanceTimersByTimeAsync(300);
-    });
-
     await waitFor(() => {
       expect(mockedSearchTitles).toHaveBeenCalledWith(
         "myanimelistanime",
         "rezero",
       );
-    });
+    }, { timeout: 2000 });
 
     await user.click(
       await screen.findByRole("button", {
@@ -163,9 +151,7 @@ describe("HomePage", () => {
       JSON.stringify([recentEntry]),
     );
 
-    const user = userEvent.setup({
-      advanceTimers: vi.advanceTimersByTime,
-    });
+    const user = userEvent.setup();
 
     render(<HomePage />);
 
