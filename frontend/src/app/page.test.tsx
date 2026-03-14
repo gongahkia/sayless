@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import HomePage from "@/app/page";
 import type { RecentSummary, SummaryPayload, TargetsPayload } from "@/lib/contracts";
 import * as api from "@/lib/api";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/api", async () => {
   const actual = await vi.importActual<typeof import("@/lib/api")>("@/lib/api");
