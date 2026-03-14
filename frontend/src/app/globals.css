@@ -20,7 +20,7 @@
     min-height: 100vh;
     background: var(--background);
     color: var(--foreground);
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: "Space Grotesk", sans-serif;
   }
 
   a {
@@ -36,7 +36,7 @@
 
 @layer utilities {
   .font-mono-display {
-    font-family: var(--font-ibm-plex-mono), monospace;
+    font-family: "IBM Plex Mono", monospace;
   }
 
   .text-balance {
