@@ -1,5 +1,6 @@
 .env*
 !/.env.example
+!backend/.env.example
 deps/
 _build/
 *.ez
