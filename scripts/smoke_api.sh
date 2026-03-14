@@ -12,6 +12,12 @@ if ! command -v python3 >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! curl -fsS --max-time 3 "${API_BASE_URL}/" >/dev/null 2>&1; then
+  echo "[sayless] Backend is not reachable at ${API_BASE_URL}."
+  echo "[sayless] Start the API first, then rerun ./scripts/smoke_api.sh."
+  exit 1
+fi
+
 echo "[sayless] Searching '$QUERY' on source '$SOURCE'..."
 SEARCH_RESPONSE="$(curl -fsS "${API_BASE_URL}/api/v1/search?source=${SOURCE}&query=${QUERY}")"
 
