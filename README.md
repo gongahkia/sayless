@@ -58,7 +58,7 @@ Recent summaries are stored in browser local storage only. There is no auth and 
 
 ### Backend configuration
 
-Create `backend/.env`:
+Copy `backend/.env.example` to `backend/.env` and fill in the keys:
 
 ```env
 GEMINI_API_KEY=YOUR_GEMINI_KEY
@@ -77,17 +77,25 @@ If omitted, the frontend defaults to `http://localhost:4000`.
 
 ### Run locally
 
-From the repo root:
+Bootstrap the repo first:
+
+```console
+make setup
+```
+
+Then start both apps:
 
 ```console
 make
 ```
 
-Or run each app separately:
+Useful single-purpose commands:
 
 ```console
-cd backend && mix phx.server
-cd frontend && npm install && npm run dev
+make frontend-test
+make frontend-build
+make backend-test
+make smoke-api
 ```
 
 ## API
@@ -178,7 +186,8 @@ At a high level:
 - Episode depth depends on what upstream public APIs expose
 - There is no database, user account system, or server-side history
 - Movies, books, and manga are intentionally title-level in this version
-- Frontend test tooling is not set up yet; backend request coverage is the stronger test layer today
+- Backend execution still depends on having Elixir/Mix available locally
+- Live smoke testing still requires a running backend plus valid API keys
 
 ## Screenshots
 
