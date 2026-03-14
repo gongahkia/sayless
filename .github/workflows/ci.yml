@@ -43,3 +43,16 @@ jobs:
 
       - run: mix deps.get
       - run: mix test
+      - run: mix phx.server > /tmp/sayless-backend.log 2>&1 &
+      - run: |
+          for attempt in $(seq 1 15); do
+            if curl -fsS http://127.0.0.1:4000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/sayless-backend.log
+          exit 1
+        working-directory: .
+      - run: ./scripts/smoke_backend_http.sh
+        working-directory: .
