@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useDeferredValue, useEffect, useState, startTransition } from "react";
 import RecentSummaries from "@/components/RecentSummaries";
 import SummaryDisplay from "@/components/SummaryDisplay";
@@ -337,7 +338,7 @@ function FeatureCard({
   title,
   body,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   body: string;
 }) {
