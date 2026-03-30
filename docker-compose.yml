@@ -9,6 +9,7 @@ services:
     environment:
       PORT: 4000
       PHX_HOST: localhost
+      PHX_BIND_ALL: "true"
     ports:
       - "4000:4000"
 
