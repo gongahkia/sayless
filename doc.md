@@ -107,8 +107,10 @@ The following improvements are implemented directly in this repository:
 - Fixed backend Docker base image to a valid maintained tag (`elixir:1.17`).
 - Fixed Docker backend reachability in dev via `PHX_BIND_ALL` support.
 - Added deterministic mode to `scripts/smoke_api.sh` (`MODE=validation`).
+- Added strict runtime env validation in backend (`runtime.exs`) for required keys and port parsing.
 - Removed redundant `frontend/jsconfig.json` to avoid config overlap.
 - Removed unused frontend UI scaffolding files and dependencies.
+- Cleared frontend dependency vulnerabilities to `0` via lockfile updates (`npm audit` clean).
 - Consolidated Next config to `frontend/next.config.ts`.
 - Removed duplicate `frontend/next.config.mjs`.
 - Replaced placeholder Next config comment with explicit, non-stub config.
@@ -122,7 +124,9 @@ The following improvements are implemented directly in this repository:
 - Backend Docker base image fix: prevents hard failures when building/running backend in Docker.
 - `PHX_BIND_ALL` support: ensures containerized backend is reachable from host-mapped ports.
 - Deterministic `smoke_api.sh` mode: enables stable smoke checks without live upstream dependencies.
+- Strict runtime env validation: fails fast on missing/empty secrets and malformed numeric settings.
 - Removal of redundant frontend configs/scaffolding: reduces cognitive load and dead code maintenance.
+- Dependency hygiene update: reduces security risk and suppresses avoidable audit noise.
 - Next config consolidation: removes ambiguity and avoids split-brain configuration behavior.
 
 ## 9) Remaining Backlog (Not Modified in This Pass)
@@ -133,7 +137,6 @@ The following improvements are implemented directly in this repository:
 
 ## 10) Remaining Stub/Partial Areas Worth Upgrading
 
-- Runtime `.env` parsing in backend is custom and minimal; a stricter parser/validation path would reduce silent misconfiguration risk.
 - Frontend error UX currently passes through backend messages directly; adding code-aware client messaging would improve guidance quality.
 
 ## 11) Engineering Considerations
