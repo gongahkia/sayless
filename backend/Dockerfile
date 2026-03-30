@@ -1,4 +1,4 @@
-FROM hexpm/elixir:1.17.3-erlang-27.0.1-debian-bookworm-20240612
+FROM elixir:1.17
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential git curl && \
@@ -17,6 +17,7 @@ COPY backend ./
 
 ENV MIX_ENV=dev
 ENV PHX_SERVER=true
+ENV PHX_BIND_ALL=true
 ENV PORT=4000
 
 EXPOSE 4000
