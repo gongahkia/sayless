@@ -49,7 +49,10 @@ run_backend_checks_native() {
 
   (
     cd "$BACKEND_DIR"
-    PORT="$CI_LOCAL_BACKEND_PORT" mix phx.server >"$log_file" 2>&1
+    GEMINI_API_KEY="${GEMINI_API_KEY:-ci-dummy-gemini-key}" \
+      TMDB_API_KEY="${TMDB_API_KEY:-ci-dummy-tmdb-key}" \
+      PORT="$CI_LOCAL_BACKEND_PORT" \
+      mix phx.server >"$log_file" 2>&1
   ) &
   server_pid=$!
 
@@ -95,6 +98,8 @@ run_backend_checks_docker() {
     -p "${CI_LOCAL_BACKEND_PORT}:${CI_LOCAL_BACKEND_PORT}" \
     -e "PORT=${CI_LOCAL_BACKEND_PORT}" \
     -e "PHX_BIND_ALL=true" \
+    -e "GEMINI_API_KEY=${GEMINI_API_KEY:-ci-dummy-gemini-key}" \
+    -e "TMDB_API_KEY=${TMDB_API_KEY:-ci-dummy-tmdb-key}" \
     -v "$ROOT_DIR:/workspace" \
     -w /workspace/backend \
     "$DOCKER_BACKEND_IMAGE" \
