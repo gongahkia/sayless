@@ -1,4 +1,4 @@
-.PHONY: setup dev frontend-dev backend-dev frontend-test frontend-build backend-test smoke-api smoke-backend docker-up docker-down
+.PHONY: setup dev frontend-dev backend-dev frontend-test frontend-build backend-test smoke-api smoke-backend ci-local docker-up docker-down
 
 all: dev
 
@@ -28,6 +28,9 @@ smoke-api:
 
 smoke-backend:
 	./scripts/smoke_backend_http.sh
+
+ci-local:
+	./scripts/ci_local.sh
 
 docker-up:
 	docker compose up --build
